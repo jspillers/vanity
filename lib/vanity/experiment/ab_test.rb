@@ -321,10 +321,10 @@ module Vanity
           best, second = sorted[0], sorted[1]
           if best.measure > second.measure
             diff = ((best.measure - second.measure) / second.measure * 100).round
-            better = " (%d%% better than %s)" % [diff, second.name] if diff > 0
-            claims << "The best choice is %s: it converted at %.1f%%%s." % [best.name, best.measure * 100, better]
+            better = " (%d%s better than %s)" % [diff, "%", second.name] if diff > 0
+            claims << "The best choice is %s: it converted at %.1f%s%s." % [best.name, best.measure * 100, "%", better]
             if best.probability >= 90
-              claims << "With %d%% probability this result is statistically significant." % score.best.probability
+              claims << "With %d%s probability this result is statistically significant." % [score.best.probability, "%"]
             else
               claims << "This result is not statistically significant, suggest you continue this experiment."
             end
@@ -332,7 +332,7 @@ module Vanity
           end
           sorted.each do |alt|
             if alt.measure > 0.0
-              claims << "%s converted at %.1f%%." % [alt.name.gsub(/^o/, "O"), alt.measure * 100]
+              claims << "%s converted at %.1f%s." % [alt.name.gsub(/^o/, "O"), alt.measure * 100, "%"]
             else
               claims << "%s did not convert." % alt.name.gsub(/^o/, "O")
             end
